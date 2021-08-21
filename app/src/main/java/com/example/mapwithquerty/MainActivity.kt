@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.content.ContextCompat
 import com.example.mapwithquerty.ui.theme.MapWithQuertyTheme
 
 class MainActivity : ComponentActivity() {
@@ -23,7 +24,7 @@ class MainActivity : ComponentActivity() {
             MapWithQuertyTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                    Greeting()
                 }
             }
         }
@@ -31,11 +32,11 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String) {
+fun Greeting() {
     Box(modifier = Modifier.fillMaxSize()) {
         Button(
             modifier = Modifier.align(Alignment.Center),
-            onClick = { /*TODO*/ }
+            onClick = { getLocation() }
         ) {
             Text(text = stringResource(R.string.get_location))
         }
@@ -46,6 +47,10 @@ fun Greeting(name: String) {
 @Composable
 fun DefaultPreview() {
     MapWithQuertyTheme {
-        Greeting("Android")
+        Greeting()
     }
+}
+
+fun getLocation() {
+    println(1)
 }
