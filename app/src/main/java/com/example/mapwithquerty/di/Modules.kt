@@ -4,6 +4,7 @@ import com.example.mapwithquerty.BuildConfig
 import com.example.mapwithquerty.data.UsersRemoteService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.squareup.picasso.Picasso
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -31,6 +32,10 @@ object RetrofitModule {
     @Singleton
     @Provides
     fun getPersonRetrofitService(retrofit: Retrofit): UsersRemoteService = retrofit.create(UsersRemoteService::class.java)
+
+    @Singleton
+    @Provides
+    fun getPicasso(): Picasso = Picasso.get()
 
 }
 

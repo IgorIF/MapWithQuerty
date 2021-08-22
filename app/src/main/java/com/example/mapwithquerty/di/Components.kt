@@ -1,6 +1,7 @@
 package com.example.mapwithquerty.di
 
 import com.example.mapwithquerty.ui.viewmodels.MainViewModel
+import com.squareup.picasso.Picasso
 import dagger.Component
 import dagger.Subcomponent
 import javax.inject.Singleton
@@ -21,4 +22,5 @@ interface MainScreenComponent {
     }
 
     fun getViewModel(): MainViewModel
+    fun getPicasso(): Picasso
 }

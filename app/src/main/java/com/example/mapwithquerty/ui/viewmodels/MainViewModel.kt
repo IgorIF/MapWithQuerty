@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.mapwithquerty.data.models.UsersResult
 import com.example.mapwithquerty.data.UsersRepository
-import com.example.mapwithquerty.data.models.Results
+import com.example.mapwithquerty.data.models.User
 import com.example.mapwithquerty.di.MainScreenScope
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,10 +17,10 @@ class MainViewModel @Inject constructor(
     private val usersRepository: UsersRepository
 ): ViewModel() {
 
-    val users = mutableStateOf<List<Results>>(emptyList())
+    val users = mutableStateOf<List<User>>(emptyList())
 
     init {
-        getPersons(10)
+        getPersons(20)
     }
 
     private fun getPersons(size: Int) {

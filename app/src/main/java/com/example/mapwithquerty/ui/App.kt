@@ -19,8 +19,7 @@ fun App() {
     NavHost(navController = navController, startDestination = Screen.MAIN.route) {
         composable(Screen.MAIN.route) {
             val component = (LocalContext.current.applicationContext as Application).appComponent.mainScreenComponent().create()
-            val viewModel = daggerViewModel { component.getViewModel() }
-            MainScreen(viewModel)
+            MainScreen(component)
         }
         composable(Screen.MAP.route) { MapScreen() }
         composable(Screen.PERSON.route) { PersonScreen() }
