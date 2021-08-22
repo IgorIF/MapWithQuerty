@@ -6,6 +6,7 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
@@ -27,31 +28,42 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import java.lang.Exception
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.graphicsLayer
 
 
 @Composable
 fun MainScreen(component: MainScreenComponent) {
 
     val viewModel = daggerViewModel { component.getViewModel() }
-
+    
     SwipeRefresh(
         state = rememberSwipeRefreshState(false),
         onRefresh = { viewModel.getPersons(30) }
     ) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp, vertical = 10.dp)
-        ) {
+        Box(modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center) {
             if (viewModel.users.value.isEmpty()) {
                 CircularProgressIndicator()
             } else {
                 LazyColumn(
+                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
                     verticalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     items(viewModel.users.value) {
+                        val animatedProgress = remember { Animatable(initialValue = 0.8f) }
+                        LaunchedEffect(Unit) {
+                            animatedProgress.animateTo(
+                                targetValue = 1f,
+                                animationSpec = tween(300, easing = LinearEasing)
+                            )
+                        }
+                        val modifier = Modifier.fillParentMaxWidth().padding(8.dp).graphicsLayer { scaleY = animatedProgress.value; scaleX = animatedProgress.value }
                         UserCardView(
+                            modifier = modifier,
                             user = it,
                             picasso = component.getPicasso()
                         )
@@ -60,10 +72,12 @@ fun MainScreen(component: MainScreenComponent) {
             }
         }
     }
+
 }
 
+
 @Composable
-fun UserCardView(user: User, picasso: Picasso?) {
+fun UserCardView(modifier: Modifier, user: User, picasso: Picasso?) {
 
     var image by remember { mutableStateOf<ImageBitmap?>(null)}
 
@@ -75,7 +89,7 @@ fun UserCardView(user: User, picasso: Picasso?) {
         )
     }
 
-    Card(modifier = Modifier
+    Card(modifier = modifier
         .fillMaxWidth()
         .height(80.dp)
         .clickable(onClick = {})) {
@@ -120,7 +134,7 @@ fun UserCardView(user: User, picasso: Picasso?) {
 @Preview(name = "UserCardView")
 @Composable
 fun UserCardViewPreview() {
-    UserCardView(
+    UserCardView( Modifier,
         User(
             "male",
             Name("Jack", "Barker"),
