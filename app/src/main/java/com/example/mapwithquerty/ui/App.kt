@@ -5,6 +5,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import com.example.mapwithquerty.Application
 import com.example.mapwithquerty.navigation.Screen
 import com.example.mapwithquerty.ui.screens.MainScreen
@@ -23,5 +24,6 @@ fun App() {
         }
         composable(Screen.MAP.route) { MapScreen() }
         composable(Screen.PERSON.route) { PersonScreen() }
+
     }
 }

@@ -16,6 +16,9 @@ data class User (
     @SerializedName("email")
     var email: String,
 
+    @SerializedName("dob")
+    var dob: Dob,
+
     @SerializedName("picture")
     var picture: Picture
 

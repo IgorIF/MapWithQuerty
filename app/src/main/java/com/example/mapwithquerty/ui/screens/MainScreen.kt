@@ -2,22 +2,20 @@ package com.example.mapwithquerty.ui.screens
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,18 +32,25 @@ fun MainScreen(component: MainScreenComponent) {
 
     val viewModel = daggerViewModel { component.getViewModel() }
 
-    LazyColumn(
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
-        verticalArrangement = Arrangement.spacedBy(6.dp)
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp, vertical = 10.dp)
     ) {
-        items(viewModel.users.value) {
-            UserCardView(
-                user = it,
-                picasso = component.getPicasso()
-            )
+        if (viewModel.users.value.isEmpty()) {
+            CircularProgressIndicator()
+        } else {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(6.dp),
+            ) {
+                items(viewModel.users.value) {
+                    UserCardView(
+                        user = it,
+                        picasso = component.getPicasso()
+                    )
+                }
+            }
         }
     }
-
 }
 
 @Composable
@@ -63,31 +68,46 @@ fun UserCardView(user: User, picasso: Picasso?) {
 
 
     Card(modifier = Modifier
-        .fillMaxWidth()) {
-        Row(modifier = Modifier.padding(4.dp)) {
+        .fillMaxWidth()
+        .height(80.dp)
+        .clickable(onClick = {})) {
+        Row(modifier = Modifier
+            .padding(4.dp)
+        ) {
 
             if (image != null) {
                 Image(
                     modifier = Modifier
                         .size(70.dp)
-                        .clip(CircleShape).border(1.dp, Color.Gray, CircleShape),
+                        .clip(CircleShape)
+                        .border(1.dp, Color.Gray, CircleShape),
                     bitmap = image!!,
                     contentDescription = "icon"
                 )
             } else {
-                Canvas(modifier = Modifier.size(70.dp)) {
+                Canvas(modifier = Modifier.size(72.dp)) {
                     drawCircle(
                         color = Color.Gray,
                         alpha = 0.2f
                     )
                 }
             }
-            Text(text = user.name.first)
+            
+            Column(modifier = Modifier
+                .weight(1f)
+                .padding(start = 30.dp)
+                .align(Alignment.Bottom)) {
+                Text(
+                    text = "${user.name.first} ${user.name.last}"
+                )
+                Text(modifier = Modifier.weight(1f),
+                    text = "${user.dob.age} years"
+                )
+            }
         }
     }
 
 }
-
 
 @Preview(name = "UserCardView")
 @Composable
@@ -102,6 +122,7 @@ fun UserCardViewPreview() {
                 Coordinates("29.749907", "-95.358421")
             ),
             "jackbarker@email.com",
+            Dob("1993-07-20T09:44:18.674Z", 26),
             Picture("https://randomuser.me/api/portraits/men/75.jpg")
         ), null
     )
