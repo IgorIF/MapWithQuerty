@@ -20,10 +20,10 @@ class MainViewModel @Inject constructor(
     val users = mutableStateOf<List<User>>(emptyList())
 
     init {
-        getPersons(20)
+        getPersons(30)
     }
 
-    private fun getPersons(size: Int) {
+    fun getPersons(size: Int) {
         usersRepository.getPersons(size).enqueue(object : Callback<UsersResult> {
             override fun onResponse(call: Call<UsersResult>, response: Response<UsersResult>) {
                 if (response.isSuccessful) {

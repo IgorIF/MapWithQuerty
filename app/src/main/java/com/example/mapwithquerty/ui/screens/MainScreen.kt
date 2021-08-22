@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.dp
 import com.example.mapwithquerty.data.models.*
 import com.example.mapwithquerty.di.MainScreenComponent
 import com.example.mapwithquerty.utils.daggerViewModel
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import java.lang.Exception
@@ -32,21 +34,28 @@ fun MainScreen(component: MainScreenComponent) {
 
     val viewModel = daggerViewModel { component.getViewModel() }
 
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp, vertical = 10.dp)
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(false),
+        onRefresh = { viewModel.getPersons(30) }
     ) {
-        if (viewModel.users.value.isEmpty()) {
-            CircularProgressIndicator()
-        } else {
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(6.dp),
-            ) {
-                items(viewModel.users.value) {
-                    UserCardView(
-                        user = it,
-                        picasso = component.getPicasso()
-                    )
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp, vertical = 10.dp)
+        ) {
+            if (viewModel.users.value.isEmpty()) {
+                CircularProgressIndicator()
+            } else {
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(6.dp),
+                ) {
+                    items(viewModel.users.value) {
+                        UserCardView(
+                            user = it,
+                            picasso = component.getPicasso()
+                        )
+                    }
                 }
             }
         }
@@ -65,7 +74,6 @@ fun UserCardView(user: User, picasso: Picasso?) {
             onSuccess = {image = it}
         )
     }
-
 
     Card(modifier = Modifier
         .fillMaxWidth()
