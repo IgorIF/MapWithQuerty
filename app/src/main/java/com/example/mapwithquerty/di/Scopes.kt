@@ -12,4 +12,4 @@ annotation class MapScreenScope
 
 @Scope
 @Retention(value = AnnotationRetention.RUNTIME)
-annotation class PersonScreenScope
+annotation class UserScreenScope

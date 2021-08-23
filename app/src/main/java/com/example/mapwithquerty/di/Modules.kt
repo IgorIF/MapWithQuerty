@@ -39,5 +39,5 @@ object RetrofitModule {
 
 }
 
-@Module(subcomponents = [MainScreenComponent::class])
+@Module(subcomponents = [MainScreenComponent::class, UserScreenComponent::class])
 object SubcomponentsModule

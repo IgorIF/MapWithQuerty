@@ -36,7 +36,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 
 
 @Composable
-fun MainScreen(component: MainScreenComponent) {
+fun MainScreen(component: MainScreenComponent, onUserClick: (User) -> Unit) {
 
     val viewModel = daggerViewModel { component.getViewModel() }
     
@@ -65,7 +65,8 @@ fun MainScreen(component: MainScreenComponent) {
                         UserCardView(
                             modifier = modifier,
                             user = it,
-                            picasso = component.getPicasso()
+                            picasso = component.getPicasso(),
+                            onUserClick = onUserClick
                         )
                     }
                 }
@@ -77,7 +78,7 @@ fun MainScreen(component: MainScreenComponent) {
 
 
 @Composable
-fun UserCardView(modifier: Modifier, user: User, picasso: Picasso?) {
+fun UserCardView(modifier: Modifier, user: User, picasso: Picasso?, onUserClick: (User) -> Unit) {
 
     var image by remember { mutableStateOf<ImageBitmap?>(null)}
 
@@ -92,7 +93,7 @@ fun UserCardView(modifier: Modifier, user: User, picasso: Picasso?) {
     Card(modifier = modifier
         .fillMaxWidth()
         .height(80.dp)
-        .clickable(onClick = {})) {
+        .clickable(onClick = {onUserClick(user)})) {
         Row(modifier = Modifier
             .padding(4.dp)
         ) {
@@ -146,7 +147,7 @@ fun UserCardViewPreview() {
             "jackbarker@email.com",
             Dob("1993-07-20T09:44:18.674Z", 26),
             Picture("https://randomuser.me/api/portraits/men/75.jpg")
-        ), null
+        ), null, {}
     )
 }
 
