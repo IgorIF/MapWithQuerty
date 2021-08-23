@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.unit.dp
 import com.example.mapwithquerty.data.models.*
 import com.example.mapwithquerty.di.UserScreenComponent
+import com.example.mapwithquerty.ui.components.UserAvatar
 import com.example.mapwithquerty.utils.getUserAvatarExtension
 
 @Composable
@@ -38,16 +39,10 @@ fun UserScreen(component: UserScreenComponent, user: User) {
                 )
             }
 
-            if (image != null) {
-                Image(
-                    modifier = Modifier
-                        .size(260.dp)
-                        .clip(CircleShape)
-                        .border(1.dp, Color.Gray, CircleShape),
-                    bitmap = image!!,
-                    contentDescription = "avatar"
-                )
-            }
+            UserAvatar(
+                size = 260.dp,
+                bitmap = image
+            )
 
             Spacer(Modifier.height(30.dp))
             

@@ -26,6 +26,7 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.ui.graphics.graphicsLayer
+import com.example.mapwithquerty.ui.components.UserAvatar
 import com.example.mapwithquerty.utils.getUserAvatarExtension
 
 @Composable
@@ -101,35 +102,24 @@ fun UserCardView(modifier: Modifier, user: User, picasso: Picasso, onUserClick: 
         )
     }
 
-    Card(modifier
-        .fillMaxWidth()
-        .height(80.dp)
-        .clickable { onUserClick(user) }
+    Card(
+        modifier
+            .fillMaxWidth()
+            .height(80.dp)
+            .clickable { onUserClick(user) }
     ) {
         Row(Modifier.padding(4.dp)) {
 
-            if (image != null) {
-                Image(
-                    modifier = Modifier
-                        .size(70.dp)
-                        .clip(CircleShape)
-                        .border(1.dp, Color.Gray, CircleShape),
-                    bitmap = image!!,
-                    contentDescription = "avatar"
-                )
-            } else {
-                Canvas(Modifier.size(72.dp)) {
-                    drawCircle(
-                        color = Color.Gray,
-                        alpha = 0.2f
-                    )
-                }
-            }
+            UserAvatar(
+                size = 70.dp,
+                bitmap = image
+            )
             
-            Column(Modifier
-                .weight(1f)
-                .padding(start = 30.dp)
-                .align(Alignment.Bottom)
+            Column(
+                Modifier
+                    .weight(1f)
+                    .padding(start = 30.dp)
+                    .align(Alignment.Bottom)
             ) {
                 Text(
                     text = "${user.name.first} ${user.name.last}"
