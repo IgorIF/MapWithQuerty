@@ -13,12 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.mapwithquerty.Application
 import com.example.mapwithquerty.data.models.*
 import com.example.mapwithquerty.di.UserScreenComponent
+import com.example.mapwithquerty.utils.getUserAvatarExtension
 
 @Composable
 fun UserScreen(component: UserScreenComponent, user: User) {
@@ -34,8 +32,7 @@ fun UserScreen(component: UserScreenComponent, user: User) {
             var image by remember { mutableStateOf<ImageBitmap?>(null) }
 
             SideEffect {
-                getAvatar(
-                    picasso = component.getPicasso(),
+                component.getPicasso().getUserAvatarExtension(
                     user = user,
                     onSuccess = {image = it}
                 )
@@ -52,14 +49,14 @@ fun UserScreen(component: UserScreenComponent, user: User) {
                 )
             }
 
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(Modifier.height(30.dp))
             
             Text(
                 text = "${user.name.first} ${user.name.last}",
                 style = MaterialTheme.typography.h5
             )
 
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(Modifier.height(30.dp))
             
             Divider()
 
@@ -68,6 +65,7 @@ fun UserScreen(component: UserScreenComponent, user: User) {
     
 }
 
+/*
 @Preview
 @Composable
 fun UserScreenPreview() {
@@ -86,4 +84,4 @@ fun UserScreenPreview() {
             Picture("https://randomuser.me/api/portraits/men/75.jpg")
         )
     )
-}
+}*/
