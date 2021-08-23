@@ -39,6 +39,7 @@ interface UserScreenComponent {
     }
 
     fun getViewModel(): UserViewModel
+    fun getPicasso(): Picasso
     fun getGson(): Gson
 }
 

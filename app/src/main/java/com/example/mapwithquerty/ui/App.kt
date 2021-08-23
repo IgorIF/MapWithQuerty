@@ -27,7 +27,6 @@ fun App() {
         composable(Screen.MAIN.route) { backStackEntry ->
             val component = (LocalContext.current.applicationContext as Application).appComponent.mainScreenComponent().create()
             MainScreen(component) {
-                val userJson = toJson(component.getGson(), it)
                 backStackEntry.arguments = Bundle().apply { putSerializable(Screen.USER.parameter, it) }
                 navController.navigate(Screen.USER.route)
             }

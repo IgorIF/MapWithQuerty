@@ -45,7 +45,8 @@ fun MainScreen(component: MainScreenComponent, onUserClick: (User) -> Unit) {
         onRefresh = { viewModel.getPersons(30) }
     ) {
         Box(modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center) {
+            contentAlignment = Alignment.Center
+        ) {
             if (viewModel.users.value.isEmpty()) {
                 CircularProgressIndicator()
             } else {
@@ -78,7 +79,7 @@ fun MainScreen(component: MainScreenComponent, onUserClick: (User) -> Unit) {
 
 
 @Composable
-fun UserCardView(modifier: Modifier, user: User, picasso: Picasso?, onUserClick: (User) -> Unit) {
+fun UserCardView(modifier: Modifier, user: User, picasso: Picasso, onUserClick: (User) -> Unit) {
 
     var image by remember { mutableStateOf<ImageBitmap?>(null)}
 
@@ -132,7 +133,7 @@ fun UserCardView(modifier: Modifier, user: User, picasso: Picasso?, onUserClick:
 
 }
 
-@Preview(name = "UserCardView")
+/*@Preview(name = "UserCardView")
 @Composable
 fun UserCardViewPreview() {
     UserCardView( Modifier,
@@ -147,12 +148,12 @@ fun UserCardViewPreview() {
             "jackbarker@email.com",
             Dob("1993-07-20T09:44:18.674Z", 26),
             Picture("https://randomuser.me/api/portraits/men/75.jpg")
-        ), null, {}
+        ), , {}
     )
-}
+}*/
 
 fun getAvatar(
-    picasso: Picasso?,
+    picasso: Picasso,
     user: User,
     onSuccess: (ImageBitmap?) -> Unit
 ) {
