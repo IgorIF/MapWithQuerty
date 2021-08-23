@@ -164,5 +164,5 @@ fun getAvatar(
         override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {}
         override fun onPrepareLoad(placeHolderDrawable: Drawable?){}
     }
-    picasso?.load(user.picture.large)?.into(target)
+    picasso.load(user.picture.large)?.into(target)
 }
