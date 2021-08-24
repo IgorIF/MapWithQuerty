@@ -6,6 +6,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.navigation.NavType
 import androidx.navigation.compose.navArgument
 import com.example.mapwithquerty.Application
@@ -19,6 +20,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
 
+@ExperimentalUnitApi
 @ExperimentalPermissionsApi
 @ExperimentalAnimationApi
 @Composable

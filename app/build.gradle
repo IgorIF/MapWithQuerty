@@ -75,6 +75,10 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     implementation "com.google.android.gms:play-services-location:18.0.0"
+    implementation 'com.google.maps.android:maps-ktx:3.1.0'
+    implementation 'com.google.maps.android:maps-utils-ktx:3.1.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
+    implementation 'com.google.maps.android:android-maps-utils:2.0.3'
     implementation 'com.google.dagger:dagger:2.38.1'
     kapt 'com.google.dagger:dagger-compiler:2.38.1'
 
