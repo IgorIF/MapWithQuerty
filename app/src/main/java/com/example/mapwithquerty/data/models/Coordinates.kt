@@ -5,8 +5,8 @@ import java.io.Serializable
 
 data class Coordinates(
     @SerializedName("latitude")
-    var latitude: String,
+    var latitude: Double,
 
     @SerializedName("longitude")
-    var longitude: String
+    var longitude: Double
 ) : Serializable
