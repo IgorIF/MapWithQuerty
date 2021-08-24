@@ -60,28 +60,32 @@ fun MainScreen(component: MainScreenComponent, onUserClick: (User) -> Unit) {
 fun UsersListView(users: List<User>, picasso: Picasso, onUserClick: (User) -> Unit) {
     val listState = rememberLazyListState()
     LazyColumn(
+        state = listState,
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         items(users) {
             val animatedProgress = remember { Animatable(0.8f) }
+
             LaunchedEffect(Unit) {
                 animatedProgress.animateTo(
                     targetValue = 1f,
-                    animationSpec = tween(durationMillis = 300, easing = LinearEasing)
+                    animationSpec = tween(durationMillis = 200, easing = LinearEasing)
                 )
             }
 
-            val modifier = Modifier
+            val cardModifier = Modifier
                 .fillParentMaxWidth()
                 .padding(8.dp)
                 .graphicsLayer {
-                    scaleX = animatedProgress.value
-                    scaleY = animatedProgress.value
+                    if (listState.isScrollInProgress) {
+                        scaleX = animatedProgress.value
+                        scaleY = animatedProgress.value
+                    }
                 }
 
             UserCardView(
-                modifier = modifier,
+                modifier = cardModifier,
                 user = it,
                 picasso = picasso,
                 onUserClick = onUserClick

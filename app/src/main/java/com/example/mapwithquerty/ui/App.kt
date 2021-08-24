@@ -1,8 +1,10 @@
 package com.example.mapwithquerty.ui
 
+import android.Manifest
 import android.os.Bundle
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavType
 import androidx.navigation.compose.navArgument
@@ -14,19 +16,29 @@ import com.example.mapwithquerty.ui.screens.UserScreen
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberPermissionState
 
+@ExperimentalPermissionsApi
 @ExperimentalAnimationApi
 @Composable
 fun App() {
     val navController = rememberAnimatedNavController()
+    val navigationPermissionState = rememberPermissionState(Manifest.permission.ACCESS_COARSE_LOCATION)
+
+    if (!navigationPermissionState.hasPermission) {
+        SideEffect {
+            navigationPermissionState.launchPermissionRequest()
+        }
+    }
 
     AnimatedNavHost(navController = navController, startDestination = Screen.MAIN.route) {
         composable(
             route = Screen.MAIN.route,
-            enterTransition = null,
+            /*enterTransition = null,
             exitTransition = null,
             popEnterTransition = null,
-            popExitTransition = null
+            popExitTransition = null*/
         ) { backStackEntry ->
             val component = (LocalContext.current.applicationContext as Application).appComponent.mainScreenComponent().create()
             MainScreen(component) {

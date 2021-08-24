@@ -23,7 +23,7 @@ class MainViewModel @Inject constructor(
         getPersons()
     }
 
-    fun getPersons(size: Int = 30) {
+    fun getPersons(size: Int = 50) {
         usersRepository.getPersons(size).enqueue(object : Callback<UsersResult> {
             override fun onResponse(call: Call<UsersResult>, response: Response<UsersResult>) {
                 if (response.isSuccessful) {
